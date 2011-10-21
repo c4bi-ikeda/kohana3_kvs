@@ -1,0 +1,7 @@
+*.org/
+*.bak/
+*.log/
+*.back/
+*.tmp/
+*.temp/
+*~/
