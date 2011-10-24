@@ -64,7 +64,13 @@ class Kohana_KVS_Memcached extends KVS {
 	 */
 	public function get($key) {
 		$this->connect();
-		return $this->_connection->get($key);
+
+		$serializer = Serialize::instance();
+		$val = $this->_connection->get($key);
+		if (!$val) return $val;
+
+		// 問答無用でアンシリアライズ
+		return $serializer->unserialize($val);
 	}
 
 	/**
@@ -79,8 +85,10 @@ class Kohana_KVS_Memcached extends KVS {
 		$this->connect();
 		$ttl = intval($ttl);
 
+		$serializer = Serialize::instance();
 		try {
-			$this->_connection->set($key, $value, 0, $ttl);
+			$this->_connection->set($key,
+						$serializer->serialize($value), 0, $ttl);
 		} catch (Exception $e) {
 			throw new KVS_Exception(':error',
 						array(':error' => $e->getMessage()),

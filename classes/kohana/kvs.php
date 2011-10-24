@@ -173,9 +173,14 @@ abstract class Kohana_KVS {
 				));
 		}
 
+		if (!is_array($arguments)) {
+			$arguments = array($arguments);
+		}
+
 		try {
-			return call_user_func(array($this->_connection, $name),
-								  $arguments);
+			return call_user_func_array(
+									array($this->_connection, $name),
+									$arguments);
 		} catch (Exception $e) {
 			throw new KVS_Exception(':error',
 					array(':error'	=> $e->getMessage()),
