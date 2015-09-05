@@ -142,7 +142,7 @@ abstract class Kohana_KVS {
 	 * @throws	KVS_Exception
 	 * @return	boolean
 	 */
-	abstract public function set($key, $value);
+	abstract public function set($key, $value, $ttl = 0);
 
 	/**
 	 * Set the multi key-value pair.
